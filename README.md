@@ -18,6 +18,9 @@ CRUD completo de "Producto" (o equivalente), Categoría y Usuario (cliente)
 --------------------------------------------------------------------------
 
 
+Guias y trabajos de referencia de esta asignatura:
+
+
 
 entregar en formato ZIP (no incluir la carpeta NODE-MODULES), o link de github
 
