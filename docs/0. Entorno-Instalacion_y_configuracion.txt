@@ -1,0 +1,272 @@
+
+0. Instalación y Comandos
+Preparando el entorno desde la terminal.
+
+Antes de escribir una sola línea de código, debemos inicializar el proyecto e instalar las herramientas necesarias.
+
+// 1. Crear el proyecto
+
+npm init -y
+// 2. Dependencias de producción (Necesarias para que la app funcione)
+
+npm install express sequelize mysql2 dotenv cors morgan
+// 3. Dependencias de desarrollo (Solo para programar más rápido)
+
+npm install -D nodemon
+
+------------------------------------------------------------------------------------
+
+1. Diferencio entornos de desarrollo y producción.
+Configuro scripts en package.json para ejecutar en dev o prod
+
+// package.json
+{
+  "type": "module", // Habilita import/export moderno
+  "scripts": {
+    "dev": "nodemon index.js", // Para nosotros (programadores)
+    "start": "node index.js"    // Para el servidor real
+  }
+}
+
+NOTA:
+
+npm run dev
+Usa nodemon. Reinicia el servidor automáticamente en cada guardado. Es ideal para programar porque no tienes que apagar y prender la consola manualmente.
+
+npm start
+Usa node directamente. Es el comando que usará el servidor real en la nube. Es más estable y consume menos recursos al no estar vigilando archivos.
+
+------------------------------------------------------------------------------------
+
+2. Configuración (src/config)
+Centralizando la conexión con async/await.
+
+Separamos la configuración para que la lógica de conexión sea independiente de quién la llame.
+
+src/config/database.js
+import { Sequelize } from 'sequelize';
+import 'dotenv/config';
+
+export const sequelize = new Sequelize(
+  process.env.DB_NAME,
+  process.env.DB_USER,
+  process.env.DB_PASSWORD,
+  {
+    host: process.env.DB_HOST,
+    port: process.env.DB_PORT,
+    dialect: 'mysql'
+  }
+);
+
+// Función asíncrona para testear la salud de la conexión
+export const testConnection = async () => {
+  try {
+    await sequelize.authenticate();
+    console.log('✅ Base de datos lista.');
+  } catch (error) {
+    console.error('❌ Error crítico:', error.message);
+    process.exit(1); // Detenemos la app si no hay DB
+  }
+};
+.env
+DB_NAME=guia_backend
+DB_USER=root,
+DB_PASSWORD=password,
+DB_HOST=localhost,
+DB_PORT=3306
+
+
+------------------------------------------------------------------------------------
+
+3. Definición (src/app.js)
+El 'cerebro' que configura los middlewares.
+
+¿Por qué un archivo aparte? Porque aquí definimos qué hace la app (qué rutas tiene, qué seguridad usa) pero no cuándo arranca. Esto permite que herramientas de testing puedan probar la app sin encender el servidor real.
+
+
+import express from 'express';
+import cors from 'cors';
+import morgan from 'morgan';
+
+const app = express();
+
+app.use(cors());           // Permite que React se conecte
+app.use(morgan('dev'));    // Muestra: GET /products 200 en consola
+app.use(express.json());   // Entiende los objetos JSON que enviamos
+
+export default app;
+
+------------------------------------------------------------------------------------
+
+
+HACER GUIA ROUTES.....
+
+------------------------------------------------------------------------------------
+
+
+CREAR DB
+
+------------------------------------------------------------------------------------
+
+ENTRAR POR CONSOLA A mysql / MariaDB
+
+
+sudo mysql -u root -p
+
+
+------------------------------------------------------------------------------------
+
+
+sudo mysql -u root -p
+[sudo] contraseña para ff: 
+Enter password: 
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 45
+Server version: 10.11.14-MariaDB-0ubuntu0.24.04.1 Ubuntu 24.04
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> 
+
+------------------------------------------------------------------------------------
+
+sudo mysql -u root -p
+[sudo] contraseña para ff: 
+Enter password: 
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 45
+Server version: 10.11.14-MariaDB-0ubuntu0.24.04.1 Ubuntu 24.04
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> ^C
+MariaDB [(none)]> SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| guia_back_end      |
+| guia_backend       |
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
++--------------------+
+6 rows in set (0,012 sec)
+
+MariaDB [(none)]> CREATE DATABASE hospital_db;
+Query OK, 1 row affected (0,008 sec)
+
+MariaDB [(none)]> SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| guia_back_end      |
+| guia_backend       |
+| hospital_db        |
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
++--------------------+
+7 rows in set (0,000 sec)
+
+MariaDB [(none)]> USE hospital_db;
+Database changed
+MariaDB [hospital_db]> CREATE USER 'hospital_us'@'localhost'
+    -> IDENTIFIED BY '1234';
+Query OK, 0 rows affected (0,030 sec)
+
+MariaDB [hospital_db]> GRANT ALL PRIVILEGES ON hospital_db.* TO 'hospital_us'@'localhost';
+Query OK, 0 rows affected (0,011 sec)
+
+MariaDB [hospital_db]> FLUSH PRIVILEGES;
+Query OK, 0 rows affected (0,013 sec)
+
+MariaDB [hospital_db]> SHOW GRANTS FOR 'hospital_us'@'localhost';
++--------------------------------------------------------------------------------------------------------------------+
+| Grants for hospital_us@localhost                                                                                   |
++--------------------------------------------------------------------------------------------------------------------+
+| GRANT USAGE ON *.* TO `hospital_us`@`localhost` IDENTIFIED BY PASSWORD '*A4B6157319038724E3560894F7F932C8886EBFCF' |
+| GRANT ALL PRIVILEGES ON `hospital_db`.* TO `hospital_us`@`localhost`                                               |
++--------------------------------------------------------------------------------------------------------------------+
+2 rows in set (0,001 sec)
+
+
+
+------------------------------------------------------------------------------------
+mysql -u hospital_us -p hospital_db
+Enter password: 
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 46
+Server version: 10.11.14-MariaDB-0ubuntu0.24.04.1 Ubuntu 24.04
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [hospital_db]> SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| hospital_db        |
+| information_schema |
++--------------------+
+2 rows in set (0,001 sec)
+
+MariaDB [hospital_db]> USE hospital_db;
+Database changed
+MariaDB [hospital_db]> SHOW TABLES;
+Empty set (0,000 sec)
+------------------------------------------------------------------------------------
+
+
+revisar 
+.env
+
+------------------------------------------------------------------------------------
+
+CORREGIR .env SACAR COMAS
+
+
+DB_NAME=hospital_db,
+DB_USER=hospital_us,
+DB_PASSWORD=1234,
+DB_HOST=localhost,
+DB_PORT=3306
+
+
+DB_NAME=hospital_db
+DB_USER=hospital_us
+DB_PASSWORD=1234
+DB_HOST=localhost
+DB_PORT=3306
+
+------------------------------------------------------------------------------------
+
+
+fix referencia circular...
+
+agregado de prefijo global:
+/api
+
+de modo que:
+
+Archivo	          Responsabilidad
+app.js	          Prefijo global (/api)
+routes/index.js	  Agrupar routers (/pacientes)
+pacienteRoutes.js	Endpoints concretos (/, /:id)
+
+
+uso ejemplo:
+
+http://localhost:3000/api/pacientes
+
+resultado en navegador:
+
+[{"id":1,"dni":40111222,"name":"Juan Pérez","createdAt":"2026-05-19T23:00:11.000Z","updatedAt":"2026-05-19T23:00:11.000Z"}]
+
+

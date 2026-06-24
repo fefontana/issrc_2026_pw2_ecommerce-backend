@@ -1,9 +1,13 @@
 import { Router } from 'express';
-import { MedicoRoutes } from './medicosRouter.js';
+import { ProductoRoutes } from './productosRoutes.js';
+// ... aqui importaríamos routers de otros modelos
 
+/*
+Indexaremos todos los routers individuales en uno global y declararemos el url estático donde se ubicará cada uno.
+*/
 
 const router = Router();
 
-router.use('/medicos', MedicoRoutes);
+router.use('/productos', ProductoRoutes);
 
 export default router;

@@ -1,0 +1,43 @@
+
+INSERT INTO Pacientes (dni, name) VALUES ('40111222', 'Juan Pérez');
+
+
+MariaDB [hospital_db]> INSERT INTO Pacientes (dni, name) VALUES ('40111222', 'Juan Pérez');
+ERROR 1364 (HY000): Field 'createdAt' doesn't have a default value
+
+Eso pasa porque Sequelize creó automáticamente las columnas:
+
+createdAt
+updatedAt
+
+y en tu INSERT manual no las estás enviando.
+
+
+INSERT INTO Pacientes (
+  dni,
+  name,
+  createdAt,
+  updatedAt
+)
+VALUES (
+  '40111222',
+  'Juan Pérez',
+  NOW(),
+  NOW()
+);
+
+Query OK, 1 row affected (0,010 sec)
+
+MariaDB [hospital_db]> select * from Pacientes;
++----+----------+-------------+---------------------+---------------------+
+| id | dni      | name        | createdAt           | updatedAt           |
++----+----------+-------------+---------------------+---------------------+
+|  1 | 40111222 | Juan Pérez  | 2026-05-19 23:00:11 | 2026-05-19 23:00:11 |
++----+----------+-------------+---------------------+---------------------+
+1 row in set (0,001 sec)
+
+
+
+
+http://localhost:3000/pacientes
+
