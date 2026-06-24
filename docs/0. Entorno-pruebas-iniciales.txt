@@ -1,43 +1,130 @@
+ACTIVIDADES A EJECUTAR PARA CONSIDERAR EL BACKEND FUNCIONAL
+
+COMANDOS EN ORDEN INVERSO U OBJETIVO - SALIDA ESPERADA O VERIFICACION
+
+0- EJECUTAR UNA LLAMADA A LA API - ejemplo listar productos - EN UNA ETAPA POSTERIOR VERIFICAR CRUD COMPLETO CON POSTMAN
+1- LEVANTAR EL PROYECTO EN MODO DEV - visualizar MENSAJES
+2- CONFIGURAR CONEXION DB 
+3- CREAR BASE DE DATOS
+4- ASEGURAR ENTORNO INSTALADO Y CONFIGURADO: NODE Y LIBRERIAS - MYSQL - VSCODE
+
+
+DETALLE DE CADA PASO
+
+0-
+http://localhost:3000/productos
+
+lista de productos json format
+
+1-
+npm run dev
+
+✅ Base de datos lista.
+...
+✅ Tablas sincronizadas
+🚀 App corriendo en http://localhost:3000
+Base de datos ecommerce lista y corriendo
+
+Si LA TABLA productos SE HA GENERADO POR Sequelize:
+mysql> SELECT * FROM productos;
+Empty set (0.000 sec)
+Aunque aun no tenga datos http://localhost:3000/productos
+muestra "Cannot GET /productos"
+
+2-
+editar .env
+
+3-
+sudo mysql -u root -p
+CREATE DATABASE ecommerce;
+CREATE USER 'ecomm'@'localhost' IDENTIFIED BY '1234';
+
+4-
+ver archivo de instalacion de entorno
+
+
+
+
 
 INSERT INTO Pacientes (dni, name) VALUES ('40111222', 'Juan Pérez');
 
-
+Si se intenta crear datos manualmente tal como en:
 MariaDB [hospital_db]> INSERT INTO Pacientes (dni, name) VALUES ('40111222', 'Juan Pérez');
 ERROR 1364 (HY000): Field 'createdAt' doesn't have a default value
 
 Eso pasa porque Sequelize creó automáticamente las columnas:
-
 createdAt
 updatedAt
+y en el INSERT manual no se están especificando.
 
-y en tu INSERT manual no las estás enviando.
+Lo correcto seria:
 
-
-INSERT INTO Pacientes (
-  dni,
-  name,
-  createdAt,
-  updatedAt
+INSERT INTO productos (
+  id,
+  categoria_id,
+  nombre,
+  descripcion,
+  precio,
+  stock,
+  imagen_url,
+  activo
 )
 VALUES (
-  '40111222',
-  'Juan Pérez',
-  NOW(),
-  NOW()
+  4000,
+  1,
+  'Dulce de Leche',
+  'Dulce de leche clasico elaborado artesanalmente - contenido 200 g',
+  12000.50,
+  24,
+  'dulce_leche_c1.png',
+  true
 );
 
-Query OK, 1 row affected (0,010 sec)
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`ecommerce`.`productos`, CONSTRAINT `productos_ibfk_1` FOREIGN KEY (`categoria_id`) REFERENCES `categorias` (`id`) ON DELETE CASCADE ON UPDATE CASCADE)
 
-MariaDB [hospital_db]> select * from Pacientes;
-+----+----------+-------------+---------------------+---------------------+
-| id | dni      | name        | createdAt           | updatedAt           |
-+----+----------+-------------+---------------------+---------------------+
-|  1 | 40111222 | Juan Pérez  | 2026-05-19 23:00:11 | 2026-05-19 23:00:11 |
-+----+----------+-------------+---------------------+---------------------+
-1 row in set (0,001 sec)
+Se debe tener cargada primeramente la categoria 1 a la que se refiere este producto
 
 
+INSERT INTO categorias (
+    id,
+    nombre,
+    descripcion
+)
+VALUES (
+    1,
+    'Lácteos',
+    'Productos derivados de la leche'
+);
+
+O SIN ESPECIFICAR EL id
+
+INSERT INTO categorias (
+    nombre,
+    descripcion
+)
+VALUES (
+    'Lácteos',
+    'Productos derivados de la leche'
+);
 
 
-http://localhost:3000/pacientes
+mysql> SELECT * FROM categorias;
++----+----------+---------------------------------+
+| id | nombre   | descripcion                     |
++----+----------+---------------------------------+
+|  1 | Lácteos  | Productos derivados de la leche |
++----+----------+---------------------------------+
+1 row in set (0.000 sec)
 
+
+mysql> SELECT * FROM productos;
++------+--------------+----------------+-------------------------------------------------------------------+----------+-------+--------------------+--------+
+| id   | categoria_id | nombre         | descripcion                                                       | precio   | stock | imagen_url         | activo |
++------+--------------+----------------+-------------------------------------------------------------------+----------+-------+--------------------+--------+
+| 4000 |            1 | Dulce de Leche | Dulce de leche clasico elaborado artesanalmente - contenido 200 g | 12000.50 |    24 | dulce_leche_c1.png |      1 |
++------+--------------+----------------+-------------------------------------------------------------------+----------+-------+--------------------+--------+
+1 row in set (0.000 sec)
+
+
+
+EN UNA ETAPA POSTERIOR VERIFICAR CRUD COMPLETO CON POSTMAN
