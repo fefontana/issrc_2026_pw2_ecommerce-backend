@@ -39,12 +39,20 @@ Extensión para visualización amigable:
 - https://marketplace.visualstudio.com/items?itemName=bierner.markdown-preview-github-styles
 
 
+Introduccion
+
+docs/Repaso DB-DER.md
 
 Referencia completa con ejemplos: HTTP uso e importancia en Sistemas Web
 
+docs/HTTP - Referecia.md
 
+MATERIAL COMPLEMENTARIO: BackEnd
 
-
+docs/1. Reseña sobre enfoques de desarrollo.md
+docs/2. Sobre ORMs.md
+docs/3. Backend con Express.js.md
+docs/4. diagramaMiro.com-esquema-backend.png
 Miro
 https://miro.com/app/board/uXjVIs4s5Wk=/
 
