@@ -19,4 +19,5 @@ const Categoria = sequelize.define('Categoria', {
   timestamps: false,
 });
 
-module.exports = Categoria;
+export default Categoria;
+//module.exports = Categoria;

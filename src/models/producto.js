@@ -1,6 +1,6 @@
 import { DataTypes } from 'sequelize';
 import { sequelize } from '../config/database.js';
-const Categoria = require('./categoria');
+import Categoria from './categoria.js';
 
 const Producto = sequelize.define('Producto', {
   id: {
@@ -48,7 +48,8 @@ const Producto = sequelize.define('Producto', {
 Categoria.hasMany(Producto, { foreignKey: 'categoria_id' });
 Producto.belongsTo(Categoria, { foreignKey: 'categoria_id' });
 
-module.exports = Producto;
+export default Producto;
+//module.exports = Producto;
 
 /* OTRAS PROPIEDADES... EJEMPLO... TIPOS: TEXT, DATEONLY.... OTRAS:
 

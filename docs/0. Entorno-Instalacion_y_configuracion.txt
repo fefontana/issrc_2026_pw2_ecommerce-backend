@@ -36,6 +36,95 @@ Usa nodemon. Reinicia el servidor automáticamente en cada guardado. Es ideal pa
 npm start
 Usa node directamente. Es el comando que usará el servidor real en la nube. Es más estable y consume menos recursos al no estar vigilando archivos.
 
+
+Si no esta instalado node ni mysql (en mar hacer):
+
+ 605  npm run dev
+  606  node --version
+  607  node -v
+  608  which node\nwhich npm
+  609  brew --version
+  610  brew install node
+  611  npm init -y
+  612  npm install -D nodemon
+  613  sudo mysql -u root -p
+  614  node -v\nnpm -v
+  615  uname -m
+  616  which mysql
+  617  mysql --version
+  618  brew install mysql
+  619  brew services start mysql
+  620  mysql --version
+
+Si no puede conectar por este error...
+sudo mysql -u root -p 
+Password: 
+Enter password: 
+ERROR 1045 (28000): Access denied for user 'root'@'localhost' (using password: YES)
+....Muchas veces el usuario root se crea sin contraseña inicialmente.
+
+Proba entrar sin contraseña
+
+mysql -u root
+
+Si entra, podés asignar una contraseña:
+ALTER USER 'root'@'localhost' IDENTIFIED BY 'NuevaPassword';
+FLUSH PRIVILEGES;
+
+SHOW DATABASES;
+USE ecommerce;
+CREATE DATABASE ecommerce;
+
+CREATE USER 'ecomm'@'localhost' IDENTIFIED BY '1234';
+
+
+
+
+❌ Error crítico: Access denied for user 'ecom'@'localhost' to database 'ecommerce'
+
+recorde que me falta esto:
+El usuario ecom no tiene permisos sobre la base ecommerce.
+
+SELECT User, Host FROM mysql.user;
+
+SHOW DATABASES;
+verificar que existe ecommerce
+
+Si la base existe:
+
+GRANT ALL PRIVILEGES ON ecommerce.* TO 'ecom'@'localhost';
+FLUSH PRIVILEGES;
+
+
+
+Probar la conexión manualmente
+Antes de arrancar Node:
+mysql -u ecom -p ecommerce
+Si podés entrar, Sequelize también debería poder conectarse.
+
+
+
+Como Sequelize crea automáticamente las columnas:
+createdAt
+updatedAt
+un insert manual debe incluirlas:
+
+INSERT INTO Productos (
+  dni,
+  name,
+  createdAt,
+  updatedAt
+)
+VALUES (
+  '40111222',
+  'Juan Pérez',
+  NOW(),
+  NOW()
+);
+
+Probar 
+http://localhost:3000/productos
+
 ------------------------------------------------------------------------------------
 
 2. Configuración (src/config)
