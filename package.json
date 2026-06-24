@@ -1,16 +1,27 @@
 {
-  "name": "simulacro",
+  "name": "issrc_2026_pw2_ecommerce-backend",
   "version": "1.0.0",
-  "description": "",
+  "description": "Proyecto Final DSW2 - TSDW-2026 - Backend con modelos y rutas CRUDs de un Sistema de eCommerce segun consigna",
   "main": "index.js",
+
   "type": "module",
   "scripts": {
+    "dev": "nodemon index.js",
     "start": "node index.js",
-    "dev": "nodemon index.js"
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fefontana/issrc_2026_pw2_ecommerce-backend.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/fefontana/issrc_2026_pw2_ecommerce-backend/issues"
+  },
+  "homepage": "https://github.com/fefontana/issrc_2026_pw2_ecommerce-backend#readme",
   "dependencies": {
     "cors": "^2.8.6",
     "dotenv": "^17.4.2",

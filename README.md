@@ -1,7 +1,4 @@
 # issrc_2026_pw2_ecommerce-backend
-Ecommerce backend venta de productos de rubro general y personalizar - usar mysql, sequelize, controladores y rutas para CRUDs: GET, POST, PUT y DELETE.
-
-
 
 --------------------------------------------------------------------------
 
@@ -9,11 +6,12 @@ Desarrollo de Software | 2°
 TSDW - 2026 - Lautaro Bernardini
 Back End final: 1er cuatrimestre
 
-Este repositorio de github corresponde al BackEnd de la consiga que la asignatura en coordinación con avances de la asignatura Proyecto Integrador II (Cecilia Piombo):
+Este repositorio de github corresponde al BackEnd de la consiga que la asignatura en coordinación con avances de la asignatura Proyecto Integrador II (Cecilia Piombo) - documento de especificacion de requerimientos en /docs
 
 Todos los modelos y relaciones;
 CRUD completo de "Producto" (o equivalente), Categoría y Usuario (cliente)
 
+Ecommerce backend venta de productos de rubro general y personalizar - usar mysql, sequelize, controladores y rutas para CRUDs: GET, POST, PUT y DELETE.
 
 --------------------------------------------------------------------------
 
@@ -32,11 +30,50 @@ Simulacro3.pdf icluye json
 Simulacro2.pdf json pegado aca debajo
 
 
+Material del profe Lautaro:
+
+Para escritura de readme:
+https://markdownlivepreview.com/
+
+Extensión para visualización amigable:
+- https://marketplace.visualstudio.com/items?itemName=bierner.markdown-preview-github-styles
+
+
+
+Referencia completa con ejemplos: HTTP uso e importancia en Sistemas Web
+
+
+
+
+Miro
+https://miro.com/app/board/uXjVIs4s5Wk=/
+
+
+Guía Backend
+
+Guía para inicializar un backend incluyendo conexión con Base de Datos y un modelo de prueba
+
+https://gemini.google.com/share/4278da1f7e88?authuser=0
+
+Backend de ejemplo
+
+Ejemplo de proyecto:
+https://github.com/laubernardini/backendProyectosCorporativos
+
+
+
+
+---------------------------------------------------------------------
+
+Mauri Demasi • 2 jun
+Repo de Ejemplo basado en el primer parcial 
+https://github.com/MauriDemasi/desarrollo-software-Parcial_1
 
 
 Material adjunto sobre Seeders:
 
 https://gemini.google.com/share/b58843d21568?hl=es_419
+https://gemini.google.com/share/b58843d21568?hl=es_419&authuser=0
 
 
 
