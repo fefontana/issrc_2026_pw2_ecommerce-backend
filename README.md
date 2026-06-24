@@ -2,6 +2,23 @@
 Ecommerce backend venta de productos de rubro general y personalizar - usar mysql, sequelize, controladores y rutas para CRUDs: GET, POST, PUT y DELETE.
 
 
+
+--------------------------------------------------------------------------
+
+Desarrollo de Software | 2°
+TSDW - 2026 - Lautaro Bernardini
+Back End final: 1er cuatrimestre
+
+Este repositorio de github corresponde al BackEnd de la consiga que la asignatura en coordinación con avances de la asignatura Proyecto Integrador II (Cecilia Piombo):
+
+Todos los modelos y relaciones;
+CRUD completo de "Producto" (o equivalente), Categoría y Usuario (cliente)
+
+
+--------------------------------------------------------------------------
+
+
+
 entregar en formato ZIP (no incluir la carpeta NODE-MODULES), o link de github
 
 gitignore en app y otro
